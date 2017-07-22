@@ -7,15 +7,19 @@ import pytz
 from datetime import datetime
 import requests
 
-'''
-global variables
-'''
+
+#global variables
 num_daily_candles = 0
 num_4hr_candles = 0
 day_unix_times = []
 fourhr_unix_times = []
 
+
 ### Data pulled from GDAX web API ###
+'''
+Date requests in ISO8601 format, and they're in GMT, not EST, so 5pm GMT = 1pm EST
+Disclaimer: If try to pull a request with an end date for a time that is in the future, even by a minute, will cause strange behavior in data that's pulled! Only stay current up to most recent hour
+'''
 
 #Data begins from 1-8-15 thru present (as close as possible)
 def get_gdax_historical_data():
@@ -39,8 +43,8 @@ def get_gdax_historical_data():
     global fourhr_unix_times
     
     '''
-    month by month static retrieval of historical 4hr candle chart data, saved in text file so 
-    this doesn't have to be called continuously and take up time, nor require internet connection to run/edit code
+    Month by month static retrieval of historical 4hr candle chart data, saved in text file so 
+    this doesn't have to be called continuously and take up time, nor require internet connection to run/edit other files
     '''
     
     bit_usd_stats_4hr = public_client.get_product_historic_rates('BTC-USD',"2015-01-01T00:00:00+00:00","2015-02-01T00:00:00+00:00",granularity=14400)
@@ -178,7 +182,6 @@ def get_gdax_historical_data():
     bit_usd_stats_4hr.reverse()
     fourhr_data.append(bit_usd_stats_4hr)
     
-    
     bit_usd_stats_4hr = public_client.get_product_historic_rates('BTC-USD',"2016-04-01T00:00:00+00:00","2016-05-01T00:00:00+00:00",granularity=14400)
     num_4hr_candles = num_4hr_candles+len(bit_usd_stats_4hr)
     bit_usd_stats_4hr=sorted(bit_usd_stats_4hr,key=lambda x: (x[0]))
@@ -314,7 +317,7 @@ def get_gdax_historical_data():
     bit_usd_stats_4hr.reverse()
     fourhr_data.append(bit_usd_stats_4hr)
     
-    bit_usd_stats_4hr = public_client.get_product_historic_rates('BTC-USD',"2017-07-01T00:00:00+00:00","2017-08-01T00:00:00+00:00",granularity=14400)
+    bit_usd_stats_4hr = public_client.get_product_historic_rates('BTC-USD',"2017-07-01T00:00:00+00:00","2017-07-22T12:00:00+00:00",granularity=14400)
     num_4hr_candles = num_4hr_candles+len(bit_usd_stats_4hr)
     bit_usd_stats_4hr=sorted(bit_usd_stats_4hr,key=lambda x: (x[0]))
     for x in range(len(bit_usd_stats_4hr)):
@@ -335,12 +338,12 @@ def get_gdax_historical_data():
             f1.write(str(fourhr_unix_times[x])+"\n")
     
     f1.close()
-
     
     
     
     
-    #collect daily data and store in text file
+    
+    ###collect daily data and store in text file###
     
     global num_daily_candles
     global day_unix_times
@@ -408,7 +411,7 @@ def get_gdax_historical_data():
     
     #add daily data to the overall list to still account for passing days
     
-    bit_usd_stats = public_client.get_product_historic_rates('BTC-USD',"2017-07-12T00:00:00+00:00","2017-07-21T00:00:00+00:00",granularity=86400) #go from date range of [last date entered]-[current date]
+    bit_usd_stats = public_client.get_product_historic_rates('BTC-USD',"2017-07-12T00:00:00+00:00","2017-07-22T00:00:00+00:00",granularity=86400) #go from date range of [last date entered]-[current date]
     bit_usd_stats=sorted(bit_usd_stats,key=lambda x: (x[0]))
     for x in range(len(bit_usd_stats)):
         if x==(len(bit_usd_stats)-1):
