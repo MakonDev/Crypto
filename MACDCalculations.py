@@ -1,9 +1,9 @@
 import numpy as np
 import talib
-from DataManipulation import split_raw_data
+from DataManipulation import split_raw_daily_data
 import matplotlib.pyplot as plt
 
-dates, low_p, high_p, open_p, close_p, volume = split_raw_data()
+dates, low_p, high_p, open_p, close_p, volume = split_raw_daily_data()
 
 def macd_calculation(close_p):
     macd, macdsignal, macdhist = talib.MACD(close_p, fastperiod=12, slowperiod=26, signalperiod=9)   

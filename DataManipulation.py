@@ -1,6 +1,6 @@
 import numpy as np
 
-def split_raw_data():
+def split_raw_daily_data():
     #determine number of daily values
     f = open("daily_candle_gdax_data.txt","r")
     num_days = 0 #counter for daily candles in data set
@@ -29,7 +29,7 @@ def split_raw_data():
         j=0 #counter for each array placement
         for word in line.split(","): #splits line into individual items by ","
             #print(word)
-            if j==0: #if date in unix time
+            if j==0: #date in unix time
                 dates[i] = int(word)
             elif j==1: #if low price
                 low_p[i] = float(word)
@@ -60,5 +60,26 @@ def split_raw_data():
     #print("volume: ",volume)
     
     return dates, low_p, high_p, open_p, close_p, volume
+
+
+def split_raw_4hr_data():
+    #determine number of daily values
+    f = open("4hr_candle_gdax_data.txt","r")
+    num_candles = 0 #counter for daily candles in data set
+    for line in f:
+        num_days+=1
+    f.close()
+    print("Number of candles: ",num_candles)
     
-#split_raw_data()
+    #create numpy arrays to house different candlestick values
+    #need to be same sizes!!
+    dates = np.empty(num_days,)
+    low_p = np.empty(num_days,)
+    high_p = np.empty(num_days,)
+    open_p = np.empty(num_days,)
+    close_p = np.empty(num_days,)
+    volume = np.empty(num_days,)
+
+    
+    return dates, low_p, high_p, open_p, close_p, volume
+#split_raw_daily_data()
