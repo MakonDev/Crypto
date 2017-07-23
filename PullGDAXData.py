@@ -317,7 +317,7 @@ def get_gdax_historical_data():
     bit_usd_stats_4hr.reverse()
     fourhr_data.append(bit_usd_stats_4hr)
     
-    bit_usd_stats_4hr = public_client.get_product_historic_rates('BTC-USD',"2017-07-01T00:00:00+00:00","2017-07-22T12:00:00+00:00",granularity=14400)
+    bit_usd_stats_4hr = public_client.get_product_historic_rates('BTC-USD',"2017-07-01T00:00:00+00:00","2017-07-22T20:00:00+00:00",granularity=14400)
     num_4hr_candles = num_4hr_candles+len(bit_usd_stats_4hr)
     bit_usd_stats_4hr=sorted(bit_usd_stats_4hr,key=lambda x: (x[0]))
     for x in range(len(bit_usd_stats_4hr)):

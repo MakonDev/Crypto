@@ -80,7 +80,7 @@ def split_raw_4hr_data():
     close_p = np.empty(num_candles,)
     volume = np.empty(num_candles,)
 
-    #import dat from text file
+    #import data from text file
     f = open("4hr_candle_gdax_data.txt", "r")
     i=0 #counter for row placement into array
     for line in f:
