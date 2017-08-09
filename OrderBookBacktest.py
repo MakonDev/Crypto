@@ -1,5 +1,7 @@
 from bayesian_regression import *
+import time
 
+start = time.time() #start timer
 
 # Retrieve price, v_ask, and v_bid data points from the text file.
 prices = []
@@ -50,6 +52,12 @@ timeseries180 = generate_timeseries(prices1, 180)
 timeseries360 = generate_timeseries(prices1, 360)
 timeseries720 = generate_timeseries(prices1, 720)
 
+'''
+print(all(isinstance(x, float) for x in timeseries180))
+print(all(isinstance(x, float) for x in timeseries360))
+print(all(isinstance(x, float) for x in timeseries720))
+'''
+
 # Cluster timeseries180 in 100 clusters using k-means, return the cluster
 # centers (centers180), and choose the 20 most effective centers (s1).
 centers180 = find_cluster_centers(timeseries180, 100)
@@ -70,17 +78,12 @@ Dpi_r, Dp = linear_regression_vars(prices2, v_bid2, v_ask2, s1, s2, s3)
 w = find_parameters_w(Dpi_r, Dp)
 
 # Predict average price changes over the third time period.
-print(all(isinstance(x, float) for x in prices3))
-print(all(isinstance(x, float) for x in v_bid3))
-print(all(isinstance(x, float) for x in v_ask3))
-print(all(isinstance(x, float) for x in s1))
-print(all(isinstance(x, float) for x in s2))
-print(all(isinstance(x, float) for x in s3))
-print(all(isinstance(x, float) for x in w))
-
 dps = predict_dps(prices3, v_bid3, v_ask3, s1, s2, s3, w)
 
 # What's your 'Fuck You Money' number?
-bank_balance = evaluate_performance(prices3, dps, t=0.0001, step=1)
+bank_balance = evaluate_performance(prices3, dps, t=0.01, step=1)
 
 print(bank_balance)
+
+end = time.time()
+print("Duration: " + str(end - start) +" seconds, or " +str((end - start)/60)+" minutes")
