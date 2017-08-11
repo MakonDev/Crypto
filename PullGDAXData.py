@@ -326,7 +326,7 @@ def get_gdax_historical_data():
     bit_usd_stats_4hr.reverse()
     fourhr_data.append(bit_usd_stats_4hr)
     
-    bit_usd_stats_4hr = public_client.get_product_historic_rates('BTC-USD',"2017-07-31T00:00:00+00:00","2017-08-09T00:00:00+00:00",granularity=14400)
+    bit_usd_stats_4hr = public_client.get_product_historic_rates('BTC-USD',"2017-07-31T00:00:00+00:00","2017-08-010T00:00:00+00:00",granularity=14400)
     num_4hr_candles = num_4hr_candles+len(bit_usd_stats_4hr)
     bit_usd_stats_4hr=sorted(bit_usd_stats_4hr,key=lambda x: (x[0]))
     for x in range(len(bit_usd_stats_4hr)):
@@ -420,7 +420,7 @@ def get_gdax_historical_data():
     
     #add daily data to the overall list to still account for passing days
     
-    bit_usd_stats = public_client.get_product_historic_rates('BTC-USD',"2017-07-12T00:00:00+00:00","2017-08-09T00:00:00+00:00",granularity=86400) #go from date range of [last date entered]-[current date]
+    bit_usd_stats = public_client.get_product_historic_rates('BTC-USD',"2017-07-12T00:00:00+00:00","2017-08-10T00:00:00+00:00",granularity=86400) #go from date range of [last date entered]-[current date]
     bit_usd_stats=sorted(bit_usd_stats,key=lambda x: (x[0]))
     for x in range(len(bit_usd_stats)):
         if x==(len(bit_usd_stats)-1):
@@ -445,4 +445,4 @@ def get_gdax_historical_data():
     return daily_data,fourhr_data
 
 
-get_gdax_historical_data()
+#get_gdax_historical_data()

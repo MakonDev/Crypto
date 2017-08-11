@@ -5,8 +5,10 @@ from DataManipulation import split_raw_daily_data
 from DataManipulation import split_raw_4hr_data
 import matplotlib.pyplot as plt
 
+'''
 dates, low_p, high_p, open_p, close_p, volume = split_raw_daily_data()
 dates_4, low_p_4, high_p_4, open_p_4, close_p_4, volume_4 = split_raw_4hr_data()
+'''
 
 def macd_calculation(close_p):
     macd, macdsignal, macdhist = talib.MACD(close_p, fastperiod=12, slowperiod=26, signalperiod=9)   
@@ -191,11 +193,11 @@ np.set_printoptions(formatter={'float_kind':float_formatter})
 
 
 
-
+'''
 macd, macdsignal, macdhist = macd_calculation(close_p)
 macd_4, macdsignal_4, macdhist_4 = macd_calculation(close_p_4)
 
-'''
+
 #Test strategy & results without limit on duration
 
 profit, profit_per_cross, durations = macd_backtest_crossover(dates,low_p,high_p,open_p,close_p,volume,macd,macdsignal,macdhist)
@@ -216,6 +218,7 @@ plot_histogram(results_4hr)
 #plot_macd(dates,macd, macdsignal, macdhist)
 #plot_macd(dates_4,macd_4,macdsignal_4,macdhist_4)
 '''
+'''
 #Test strategy with duration limit
 
 profit_l, profit_per_cross_l, durations_l = backtest_duration_limit(dates,low_p,high_p,open_p,close_p,volume,macd,macdsignal,macdhist)
@@ -233,3 +236,4 @@ plot_histogram(results_4hr_l)
 
 #plot_macd(dates,macd, macdsignal, macdhist)
 #plot_macd(dates_4,macd_4,macdsignal_4,macdhist_4)
+'''
